@@ -42,7 +42,7 @@ bloquear ORDER pelo nr de itens em stock, logo, não criei nenhuma contraint
 
 
 ### Se_nao_tiver_postman
-pode usar estes comandos para correr testes e consultas, ou navegar para http://localhost:8080/swagger-ui/index.html#/ para ter um overview dos controllers da API  
+pode usar os comandos abaixo para correr testes e consultas, ou navegar para http://localhost:8080/swagger-ui/index.html#/ para ter um overview dos controllers da API  
 
 curl -X POST localhost:8080/users -H 'Content-Type: application/json' -d '{"name":"Ana","email":"ana@test.com"}'
 curl -X POST localhost:8080/items -H 'Content-Type: application/json' -d '{"name":"Keyboard"}'
