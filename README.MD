@@ -52,5 +52,5 @@ curl -X POST localhost:8080/stock-movements -H 'Content-Type: application/json' 
 curl localhost:8080/orders/1/stock-movements    
 curl localhost:8080/stock-movements/2   
 
-E para visualizar os email enviados é navegar ao http:\\localhost:8025 
+E para visualizar os email enviados é navegar ao http://localhost:8025 
 MailPit
