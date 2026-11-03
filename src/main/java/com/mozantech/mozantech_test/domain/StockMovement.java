@@ -20,9 +20,14 @@ public class StockMovement {
 
     private LocalDateTime creationDate;
 
-    @ManyToOne
-    @JoinColumn(name = "itemId", nullable = false)
+    private Integer quantity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id", nullable = false)
     private Item item;
+
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "order_id")
+    private Order assignedOrder;
 
 
 }
