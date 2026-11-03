@@ -50,4 +50,7 @@ curl -X POST localhost:8080/orders -H 'Content-Type: application/json' -d '{"ite
 curl -X POST localhost:8080/stock-movements -H 'Content-Type: application/json' -d '{"itemId":1,"quantity":3}'       
 curl -X POST localhost:8080/stock-movements -H 'Content-Type: application/json' -d '{"itemId":1,"quantity":10}'      
 curl localhost:8080/orders/1/stock-movements    
-curl localhost:8080/stock-movements/2       
+curl localhost:8080/stock-movements/2   
+
+E para visualizar os email enviados é navegar ao http:\\localhost:8025 
+MailPit
