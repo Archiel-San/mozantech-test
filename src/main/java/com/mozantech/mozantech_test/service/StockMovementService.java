@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,7 @@ public class StockMovementService {
     private final StockMovementRepository movements;
     private final ItemRepository items;
     private final FulfillmentService fulfillment;
+    private final EntityManager em;
 
     public StockMovementResponse create(StockMovementRequest r) {
         Item item = items.findByIdForUpdate(r.getItemId()).orElseThrow(() -> new NotFoundException("Item " + r.getItemId() + " not found"));
@@ -49,9 +51,10 @@ public class StockMovementService {
 
     public StockMovementResponse update(Long id, QuantityRequest r) {
         StockMovement m = get(id);
-        if (m.getAssignedOrder() != null)
-            throw new ConflictException("Movement já foi usado pela order " + m.getAssignedOrder().getId());
         items.findByIdForUpdate(m.getItem().getId());
+        em.refresh(m);
+        if (m.getAssignedOrder() != null)
+            throw new ConflictException("Movement already used by order " + m.getAssignedOrder().getId());
         m.setQuantity(r.getQuantity());
         log.info("STOCK MOVEMENT UPDATED id={} quantity={}", id, r.getQuantity());
         fulfillment.distribute(m);
@@ -60,8 +63,10 @@ public class StockMovementService {
 
     public void delete(Long id) {
         StockMovement m = get(id);
+        items.findByIdForUpdate(m.getItem().getId());
+        em.refresh(m);
         if (m.getAssignedOrder() != null)
-            throw new ConflictException("Movement já foi usado pela order " + m.getAssignedOrder().getId());
+            throw new ConflictException("Movement already used by order " + m.getAssignedOrder().getId());
         movements.delete(m);
         log.info("STOCK MOVEMENT DELETED id={}", id);
     }
@@ -74,6 +79,8 @@ public class StockMovementService {
         StockMovementResponse r = new StockMovementResponse();
         r.setId(m.getId());
         r.setCreationDate(m.getCreationDate());
+        // StockMovementResponse: add "private Long originId;", and in toResponse:
+        r.setOriginId(m.getOrigin() == null ? null : m.getOrigin().getId());
         r.setItemId(m.getItem().getId());
         r.setQuantity(m.getQuantity());
         r.setOrderId(m.getAssignedOrder() == null ? null : m.getAssignedOrder().getId());

@@ -11,4 +11,5 @@ public class StockMovementResponse {
     private Long itemId;
     private Integer quantity;
     private Long orderId;
+    private Long originId;
 }

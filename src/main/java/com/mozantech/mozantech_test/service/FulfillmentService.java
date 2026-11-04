@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -19,6 +21,7 @@ public class FulfillmentService {
     private final OrderRepository orders;
     private final ApplicationEventPublisher events;
 
+    @Transactional(propagation = Propagation.MANDATORY)
     public void fulfill(Order order) {
         long needed = order.getQuantity() - movements.fulfilled(order.getId());
         for (StockMovement free : movements.findFree(order.getItem().getId())) {
@@ -28,6 +31,7 @@ public class FulfillmentService {
         if (needed <= 0) completed(order);
     }
 
+    @Transactional(propagation = Propagation.MANDATORY)
     public void distribute(StockMovement movement) {
         for (Order order : orders.findIncomplete(movement.getItem().getId())) {
             int missing = (int) (order.getQuantity() - movements.fulfilled(order.getId()));
@@ -48,6 +52,7 @@ public class FulfillmentService {
             part.setCreationDate(free.getCreationDate());
             part.setQuantity(needed);
             part.setAssignedOrder(order);
+            part.setOrigin(free.getOrigin() != null ? free.getOrigin() : free);
             movements.save(part);
             free.setQuantity(free.getQuantity() - needed);
         }
