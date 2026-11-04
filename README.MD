@@ -165,30 +165,30 @@ Todos os endpoints aceitam e devolvem JSON.
 
 ## Exemplo completo
 
-```bash
+```
 # 1. Criar utilizador e item
-curl -X POST localhost:8080/users -H 'Content-Type: application/json' \
+#curl -X POST localhost:8080/users -H 'Content-Type: application/json' \
      -d '{"name":"Ana","email":"ana@test.com"}'
-curl -X POST localhost:8080/items -H 'Content-Type: application/json' \
+#curl -X POST localhost:8080/items -H 'Content-Type: application/json' \
      -d '{"name":"Teclado"}'
 
 # 2. Criar uma encomenda de 5 unidades (sem stock: 0% completa)
-curl -X POST localhost:8080/orders -H 'Content-Type: application/json' \
+#curl -X POST localhost:8080/orders -H 'Content-Type: application/json' \
      -d '{"itemId":1,"userId":1,"quantity":5}'
 
 # 3. Entram 3 unidades em stock: a encomenda passa a 60%
-curl -X POST localhost:8080/stock-movements -H 'Content-Type: application/json' \
+#curl -X POST localhost:8080/stock-movements -H 'Content-Type: application/json' \
      -d '{"itemId":1,"quantity":3}'
 
 # 4. Entram 10 unidades: a encomenda fica completa (100%), é enviado o email
 #    e ficam 8 unidades livres
-curl -X POST localhost:8080/stock-movements -H 'Content-Type: application/json' \
+#curl -X POST localhost:8080/stock-movements -H 'Content-Type: application/json' \
      -d '{"itemId":1,"quantity":10}'
 
 # 5. Rastreabilidade nos dois sentidos
-curl localhost:8080/orders/1/stock-movements   # movimentos usados pela encomenda
-curl localhost:8080/stock-movements/1          # campo "orderId" = encomenda que o usou
-curl localhost:8080/orders/1                   # conclusão atual
+#curl localhost:8080/orders/1/stock-movements   # movimentos usados pela encomenda
+#curl localhost:8080/stock-movements/1          # campo "orderId" = encomenda que o usou
+#curl localhost:8080/orders/1                   # conclusão atual
 ```
 
 Depois do passo 4, o email aparece em http://localhost:8025 e o ficheiro `logs/orders.log` regista os movimentos,
@@ -218,9 +218,7 @@ a conclusão da encomenda e o envio do email.
 
 ## Testes
 
-```bash
-mvn test
-```
+#mvn test
 
 Requer Docker a correr: os testes sobem uma base de dados PostgreSQL descartável com Testcontainers e chamam a API
 real por HTTP. Cobrem: sem stock, stock parcial, divisão de movimentos, prioridade da encomenda mais antiga,
