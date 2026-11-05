@@ -163,7 +163,7 @@ Todos os endpoints aceitam e devolvem JSON.
 | 409    | Conflito (email/item duplicado, apagar algo que está em uso, alterar uma encomenda completa ou um movimento já usado) |
 | 500    | Erro inesperado (fica registado no log)                                |
 
-## Exemplo completo
+## Exemplo completo (Se n tiver postman)
 
 ```
 # 1. Criar utilizador e item
