@@ -224,3 +224,6 @@ Requer Docker a correr: os testes sobem uma base de dados PostgreSQL descartáve
 real por HTTP. Cobrem: sem stock, stock parcial, divisão de movimentos, prioridade da encomenda mais antiga,
 rastreabilidade nos dois sentidos, apagar encomenda (liberta stock), validações, envio (e falha) de email e
 **concorrência** (20 encomendas em simultâneo contra 10 unidades de stock; 10 movimentos em simultâneo).
+
+Nota:
+Se tiver um serviço de postgres a correr localmente desligue. Pois a instância do docker corre também na porta 5432 e poderá gerar conflinto e as tabelas não serão criadas.
