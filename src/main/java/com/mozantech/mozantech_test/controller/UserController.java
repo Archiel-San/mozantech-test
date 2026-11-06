@@ -15,11 +15,12 @@ public class UserController {
 
     private final UserService service;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public UserDto create(@Valid @RequestBody UserDto d) {
-        return service.create(d);
-    }
+    // TODO uma vez que implementou-se o método de criação do usuário pelo keycloak, já não será utilizado este porque este cria o user sem keycloakId
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public UserDto create(@Valid @RequestBody UserDto d) {
+//        return service.create(d);
+//    }
 
     @GetMapping
     public List<UserDto> list() {
