@@ -39,7 +39,7 @@ public class ApiExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> unexpected(Exception e) {
         log.error("ERRO INESPERADO", e);
-        return body(HttpStatus.INTERNAL_SERVER_ERROR, "Erro Inesperado");
+        return body(HttpStatus.INTERNAL_SERVER_ERROR, "Erro Inesperado: " +e.getMessage());
     }
 
     private ResponseEntity<Map<String, String>> body(HttpStatus s, String msg) {

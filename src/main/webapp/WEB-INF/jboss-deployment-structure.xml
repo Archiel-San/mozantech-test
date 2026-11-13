@@ -1,0 +1,10 @@
+<jboss-deployment-structure>
+    <deployment>
+        <exclude-subsystems>
+            <subsystem name="logging"/>
+            <subsystem name="jpa"/>
+            <subsystem name="bean-validation"/>
+            <subsystem name="jaxrs"/>
+        </exclude-subsystems>
+    </deployment>
+</jboss-deployment-structure>
