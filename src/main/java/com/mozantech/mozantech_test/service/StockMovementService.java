@@ -79,7 +79,6 @@ public class StockMovementService {
         StockMovementResponse r = new StockMovementResponse();
         r.setId(m.getId());
         r.setCreationDate(m.getCreationDate());
-        // StockMovementResponse: add "private Long originId;", and in toResponse:
         r.setOriginId(m.getOrigin() == null ? null : m.getOrigin().getId());
         r.setItemId(m.getItem().getId());
         r.setQuantity(m.getQuantity());
